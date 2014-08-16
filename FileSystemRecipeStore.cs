@@ -21,7 +21,7 @@ namespace RecipeManager
             File.Delete(@"e:\portkata\" + name);
         }
 
-        public void AddRecipe(string name, string directions)
+        public void SaveRecipe(string name, string directions)
         {
             File.WriteAllText(Path.Combine("e:\\portkata", name), directions);
         }

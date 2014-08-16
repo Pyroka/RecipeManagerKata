@@ -34,8 +34,8 @@ namespace RecipeManager
         public void GetAllRecipies_AfterRecipesAdded_ReturnsRecipes()
         {
             var store = new InMemoryRecipeStore();
-            store.AddRecipe("TestRecipe1", "Put the lime in the cocanut");
-            store.AddRecipe("TestRecipe2", "Get green eggs, add ham");
+            store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
+            store.SaveRecipe("TestRecipe2", "Get green eggs, add ham");
 
             var result = store.GetAllRecipies();
 
@@ -51,8 +51,8 @@ namespace RecipeManager
         public void GetAllRecipies_AfterRecipesDeleted_ReturnsRemainingRecipes()
         {
             var store = new InMemoryRecipeStore();
-            store.AddRecipe("TestRecipe1", "Put the lime in the cocanut");
-            store.AddRecipe("TestRecipe2", "Get green eggs, add ham");
+            store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
+            store.SaveRecipe("TestRecipe2", "Get green eggs, add ham");
             store.DeleteRecipeNamed("TestRecipe1");
 
             var result = store.GetAllRecipies();
@@ -81,7 +81,7 @@ namespace RecipeManager
         public void DeleteRecipeNamed_WithNameOfExistingRecipeInDifferentCase_DeletesRecipe()
         {
             var store = new InMemoryRecipeStore();
-            store.AddRecipe("Test Recipe Name", "Some directions");
+            store.SaveRecipe("Test Recipe Name", "Some directions");
             
             store.DeleteRecipeNamed("tEsT rEcIpE nAmE");
 
@@ -91,12 +91,12 @@ namespace RecipeManager
         // --------------------------------------------------------------------
 
         [TestMethod]
-        public void AddRecipe_CalledTwiceWithSameNameButDifferentDirections_UpdatesDirections()
+        public void SaveRecipe_CalledTwiceWithSameNameButDifferentDirections_UpdatesDirections()
         {
             var store = new InMemoryRecipeStore();
-            store.AddRecipe("Recipe1", "Inital directions");
+            store.SaveRecipe("Recipe1", "Inital directions");
 
-            store.AddRecipe("Recipe1", "Much better directions");
+            store.SaveRecipe("Recipe1", "Much better directions");
 
             var expected = new[]
             {
