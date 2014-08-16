@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RecipeManager
 {
     public partial class Form1 : Form
     {
-        private List<Recipe> m_recipes = new List<Recipe>(); 
+        private List<Recipe> recipes = new List<Recipe>(); 
 
         public Form1()
         {
@@ -24,8 +19,8 @@ namespace RecipeManager
 
         private void LoadRecipes()
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(@"e:\portkata");
-            m_recipes = directoryInfo.GetFiles("*")
+            var directoryInfo = new DirectoryInfo(@"e:\portkata");
+            recipes = directoryInfo.GetFiles("*")
                 .Select(fileInfo => new Recipe { Name = fileInfo.Name, Size = fileInfo.Length, Text = File.ReadAllText(fileInfo.FullName) }).ToList();
 
             PopulateList();
@@ -35,7 +30,7 @@ namespace RecipeManager
         {
             listView1.Items.Clear();
 
-            foreach (Recipe recipe in m_recipes)
+            foreach (Recipe recipe in recipes)
             {
                 listView1.Items.Add(new RecipeListViewItem(recipe));
             }
@@ -45,7 +40,7 @@ namespace RecipeManager
         {
             foreach (RecipeListViewItem recipeListViewItem in listView1.SelectedItems)
             {
-                m_recipes.Remove(recipeListViewItem.Recipe);
+                recipes.Remove(recipeListViewItem.Recipe);
                 File.Delete(@"e:\portkata\" + recipeListViewItem.Recipe.Name);
             }
             PopulateList();

@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace RecipeManager
 {
     class RecipeListViewItem: ListViewItem
     {
-        private Recipe m_recipe;
+        private readonly Recipe recipe;
 
         public RecipeListViewItem(Recipe recipe)
         {
-            m_recipe = recipe;
+            this.recipe = recipe;
 
             Text = recipe.Name;
-            SubItems.Add(new ListViewSubItem(this, m_recipe.Size.ToString()));
+            SubItems.Add(new ListViewSubItem(this, this.recipe.Size.ToString()));
         }
 
         public Recipe Recipe {
-            get { return m_recipe; }
+            get { return recipe; }
         }
     }
 }
