@@ -45,5 +45,22 @@ namespace RecipeManager
             };
             result.ShouldAllBeEquivalentTo(expected);
         }
+
+        [TestMethod]
+        public void GetAllRecipies_AfterRecipesDeleted_ReturnsRemainingRecipes()
+        {
+            var store = new InMemoryRecipeStore();
+            store.AddRecipe("TestRecipe1", "Put the lime in the cocanut");
+            store.AddRecipe("TestRecipe2", "Get green eggs, add ham");
+            store.DeleteRecipeNamed("TestRecipe1");
+
+            var result = store.GetAllRecipies();
+
+            var expected = new[]
+            {
+                CreateRecipe("TestRecipe2", 23, "Get green eggs, add ham")
+            };
+            result.ShouldAllBeEquivalentTo(expected);
+        }
     }
 }
