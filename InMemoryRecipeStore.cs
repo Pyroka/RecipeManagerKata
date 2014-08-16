@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +15,7 @@ namespace RecipeManager
 
         public void DeleteRecipeNamed(string name)
         {
-            var recipeToDelete = recipes.FirstOrDefault(recipe => recipe.Name == name);
+            var recipeToDelete = recipes.FirstOrDefault(recipe => IsRecipeNamed(recipe, name));
             if (recipeToDelete == null)
             {
                 throw new RecipeStoreException("There is no recipe named: " + name);
@@ -30,6 +31,11 @@ namespace RecipeManager
                 Size = directions.Length,
                 Text = directions
             });
+        }
+
+        private bool IsRecipeNamed(Recipe recipe, string name)
+        {
+            return string.Equals(recipe.Name, name, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }
