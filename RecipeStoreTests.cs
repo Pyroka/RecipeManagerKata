@@ -75,5 +75,16 @@ namespace RecipeManager
             deleteAction.ShouldThrow<RecipeStoreException>()
                 .WithMessage("There is no recipe named: IncorrectName");
         }
+
+        [TestMethod]
+        public void DeleteRecipeNamed_WithNameOfExistingRecipeInDifferentCase_DeletesRecipe()
+        {
+            var store = new InMemoryRecipeStore();
+            store.AddRecipe("Test Recipe Name", "Some directions");
+            
+            store.DeleteRecipeNamed("tEsT rEcIpE nAmE");
+
+            store.GetAllRecipies().Should().BeEmpty();
+        }
     }
 }
