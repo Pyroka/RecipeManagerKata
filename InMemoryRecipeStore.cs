@@ -5,9 +5,11 @@ namespace RecipeManager
 {
     public class InMemoryRecipeStore : IRecipeStore
     {
+        private readonly List<Recipe> recipes = new List<Recipe>(); 
+
         public IEnumerable<Recipe> GetAllRecipies()
         {
-            return Enumerable.Empty<Recipe>();
+            return recipes;
         }
 
         public void DeleteRecipeNamed(string name)
@@ -17,7 +19,12 @@ namespace RecipeManager
 
         public void AddRecipe(string name, string directions)
         {
-            throw new System.NotImplementedException();
+            recipes.Add(new Recipe
+            {
+                Name = name,
+                Size = directions.Length,
+                Text = directions
+            });
         }
     }
 }
