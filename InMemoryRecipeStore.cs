@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecipeManager
 {
@@ -6,7 +7,7 @@ namespace RecipeManager
     {
         public IEnumerable<Recipe> GetAllRecipies()
         {
-            throw new System.NotImplementedException();
+            return Enumerable.Empty<Recipe>();
         }
 
         public void DeleteRecipeNamed(string name)
