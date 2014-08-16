@@ -68,8 +68,13 @@ namespace RecipeManager
         {
             var name = textBoxName.Text;
             var directions = textBoxObjectData.Text;
-            File.WriteAllText(Path.Combine("e:\\portkata", name), directions);
+            FS_CreateRecipe(name, directions);
             LoadRecipes();
+        }
+
+        private void FS_CreateRecipe(string name, string directions)
+        {
+            File.WriteAllText(Path.Combine("e:\\portkata", name), directions);
         }
 
         private void SelectedIndexChanged(object sender, EventArgs e)
