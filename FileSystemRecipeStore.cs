@@ -6,7 +6,7 @@ namespace RecipeManager
 {
     public class FileSystemRecipeStore : IRecipeStore
     {
-        public FileSystemRecipeStore()
+        public FileSystemRecipeStore(string rootDirectory)
         {
         }
 

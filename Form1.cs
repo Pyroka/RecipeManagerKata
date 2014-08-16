@@ -17,7 +17,7 @@ namespace RecipeManager
             InitializeComponent();
 
             LoadRecipes();
-            RecipeStore = new FileSystemRecipeStore();
+            RecipeStore = new FileSystemRecipeStore("./");
         }
 
         private void LoadRecipes()
