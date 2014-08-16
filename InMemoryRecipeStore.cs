@@ -10,7 +10,7 @@ namespace RecipeManager
 
         public IEnumerable<Recipe> GetAllRecipies()
         {
-            return recipes;
+            return recipes.Select(CloneRecipe);
         }
 
         public void DeleteRecipeNamed(string name)
@@ -40,6 +40,16 @@ namespace RecipeManager
                     Text = directions
                 });
             }
+        }
+
+        private static Recipe CloneRecipe(Recipe original)
+        {
+            return new Recipe
+            {
+                Name = original.Name,
+                Size = original.Size,
+                Text = original.Text
+            };
         }
 
         private Recipe FindRecipeByName(string name)
