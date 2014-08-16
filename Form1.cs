@@ -8,26 +8,27 @@ namespace RecipeManager
 {
     public partial class Form1 : Form
     {
-        private List<Recipe> recipes = new List<Recipe>(); 
+        private List<Recipe> recipes = new List<Recipe>();
+        private readonly FileSystemRecipeStore fileSystemRecipeStore;
 
         public Form1()
         {
             InitializeComponent();
 
             LoadRecipes();
+            fileSystemRecipeStore = new FileSystemRecipeStore();
+        }
+
+        public FileSystemRecipeStore FileSystemRecipeStore
+        {
+            get { return fileSystemRecipeStore; }
         }
 
         private void LoadRecipes()
         {
-            recipes = FS_GetAllRecipies().ToList();
+            recipes = FileSystemRecipeStore.FS_GetAllRecipies().ToList();
 
             PopulateList();
-        }
-
-        private IEnumerable<Recipe> FS_GetAllRecipies()
-        {
-            return new DirectoryInfo(@"e:\portkata").GetFiles("*")
-                .Select(fileInfo => new Recipe { Name = fileInfo.Name, Size = fileInfo.Length, Text = File.ReadAllText(fileInfo.FullName) });
         }
 
         private void PopulateList()
@@ -46,16 +47,11 @@ namespace RecipeManager
             {
                 recipes.Remove(recipeListViewItem.Recipe);
                 var name = recipeListViewItem.Recipe.Name;
-                FS_DeleteRecipeNamed(name);
+                FileSystemRecipeStore.FS_DeleteRecipeNamed(name);
             }
             PopulateList();
 
             NewClick(null, null);
-        }
-
-        private void FS_DeleteRecipeNamed(string name)
-        {
-            File.Delete(@"e:\portkata\" + name);
         }
 
         private void NewClick(object sender, EventArgs e)
@@ -68,13 +64,8 @@ namespace RecipeManager
         {
             var name = textBoxName.Text;
             var directions = textBoxObjectData.Text;
-            FS_CreateRecipe(name, directions);
+            FileSystemRecipeStore.FS_CreateRecipe(name, directions);
             LoadRecipes();
-        }
-
-        private void FS_CreateRecipe(string name, string directions)
-        {
-            File.WriteAllText(Path.Combine("e:\\portkata", name), directions);
         }
 
         private void SelectedIndexChanged(object sender, EventArgs e)
