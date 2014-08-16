@@ -26,7 +26,7 @@ namespace RecipeManager
 
         private void LoadRecipes()
         {
-            recipes = FileSystemRecipeStore.FS_GetAllRecipies().ToList();
+            recipes = FileSystemRecipeStore.GetAllRecipies().ToList();
 
             PopulateList();
         }
@@ -47,7 +47,7 @@ namespace RecipeManager
             {
                 recipes.Remove(recipeListViewItem.Recipe);
                 var name = recipeListViewItem.Recipe.Name;
-                FileSystemRecipeStore.FS_DeleteRecipeNamed(name);
+                FileSystemRecipeStore.DeleteRecipeNamed(name);
             }
             PopulateList();
 
@@ -64,7 +64,7 @@ namespace RecipeManager
         {
             var name = textBoxName.Text;
             var directions = textBoxObjectData.Text;
-            FileSystemRecipeStore.FS_CreateRecipe(name, directions);
+            FileSystemRecipeStore.CreateRecipe(name, directions);
             LoadRecipes();
         }
 
