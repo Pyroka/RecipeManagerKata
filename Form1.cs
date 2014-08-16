@@ -46,12 +46,17 @@ namespace RecipeManager
             {
                 recipes.Remove(recipeListViewItem.Recipe);
                 var name = recipeListViewItem.Recipe.Name;
-                File.Delete(@"e:\portkata\" + name);
+                FS_DeleteRecipeNamed(name);
             }
             PopulateList();
 
             NewClick(null, null);
-        } 
+        }
+
+        private void FS_DeleteRecipeNamed(string name)
+        {
+            File.Delete(@"e:\portkata\" + name);
+        }
 
         private void NewClick(object sender, EventArgs e)
         {
