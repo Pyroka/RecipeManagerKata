@@ -14,7 +14,11 @@ namespace RecipeManager
 
         public void DeleteRecipeNamed(string name)
         {
-            var recipeToDelete = recipes.First(recipe => recipe.Name == name);
+            var recipeToDelete = recipes.FirstOrDefault(recipe => recipe.Name == name);
+            if (recipeToDelete == null)
+            {
+                throw new RecipeStoreException("There is no recipe named: " + name);
+            }
             recipes.Remove(recipeToDelete);
         }
 
