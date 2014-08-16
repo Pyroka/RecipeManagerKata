@@ -8,25 +8,21 @@ namespace RecipeManager
 {
     public partial class Form1 : Form
     {
+        public IRecipeStore RecipeStore { get; private set; }
+
         private List<Recipe> recipes = new List<Recipe>();
-        private readonly FileSystemRecipeStore fileSystemRecipeStore;
 
         public Form1()
         {
             InitializeComponent();
 
             LoadRecipes();
-            fileSystemRecipeStore = new FileSystemRecipeStore();
-        }
-
-        public FileSystemRecipeStore FileSystemRecipeStore
-        {
-            get { return fileSystemRecipeStore; }
+            RecipeStore = new FileSystemRecipeStore();
         }
 
         private void LoadRecipes()
         {
-            recipes = FileSystemRecipeStore.GetAllRecipies().ToList();
+            recipes = RecipeStore.GetAllRecipies().ToList();
 
             PopulateList();
         }
@@ -47,7 +43,7 @@ namespace RecipeManager
             {
                 recipes.Remove(recipeListViewItem.Recipe);
                 var name = recipeListViewItem.Recipe.Name;
-                FileSystemRecipeStore.DeleteRecipeNamed(name);
+                RecipeStore.DeleteRecipeNamed(name);
             }
             PopulateList();
 
@@ -64,7 +60,7 @@ namespace RecipeManager
         {
             var name = textBoxName.Text;
             var directions = textBoxObjectData.Text;
-            FileSystemRecipeStore.CreateRecipe(name, directions);
+            RecipeStore.CreateRecipe(name, directions);
             LoadRecipes();
         }
 
