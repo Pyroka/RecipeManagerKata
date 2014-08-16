@@ -21,7 +21,12 @@ namespace RecipeManager
 
         public void DeleteRecipeNamed(string name)
         {
-            File.Delete(Path.Combine(RootDirectory, name));
+            var filePath = Path.Combine(RootDirectory, name);
+            if (!File.Exists(filePath))
+            {
+                throw new RecipeStoreException("There is no recipe named: " + name);
+            }
+            File.Delete(filePath);
         }
 
         public void SaveRecipe(string name, string directions)
