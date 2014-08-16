@@ -15,7 +15,7 @@ namespace RecipeManager
             throw new System.NotImplementedException();
         }
 
-        public void CreateRecipe(string name, string directions)
+        public void AddRecipe(string name, string directions)
         {
             throw new System.NotImplementedException();
         }

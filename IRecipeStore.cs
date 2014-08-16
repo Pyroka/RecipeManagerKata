@@ -6,6 +6,6 @@ namespace RecipeManager
     {
         IEnumerable<Recipe> GetAllRecipies();
         void DeleteRecipeNamed(string name);
-        void CreateRecipe(string name, string directions);
+        void AddRecipe(string name, string directions);
     }
 }

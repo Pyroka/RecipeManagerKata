@@ -16,5 +16,25 @@ namespace RecipeManager
 
             result.Should().BeEmpty();
         }
+
+        [TestMethod]
+        public void GetAllRecipies_AfterRecipeAdded_ReturnsSingleRecipe()
+        {
+            var store = new InMemoryRecipeStore();
+            store.AddRecipe("TestRecipe", "Put the lime in the cocanut");
+
+            var result = store.GetAllRecipies();
+
+            var expected = new[]
+            {
+                new Recipe
+                {
+                    Name = "TestRecipe",
+                    Size = 27,
+                    Text = "Put the lime in the cocanut"
+                }
+            };
+            result.ShouldAllBeEquivalentTo(expected);
+        }
     }
 }
