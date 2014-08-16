@@ -64,6 +64,19 @@ namespace RecipeManager
             result.ShouldAllBeEquivalentTo(expected);
         }
 
+        [TestMethod]
+        public void GetAllRecipies_WhenInvokedTwice_ReturnsEnumerablesContainingDifferentInstances()
+        {
+            var store = new InMemoryRecipeStore();
+            store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
+
+            const int index = 0;
+            var firstResult = store.GetAllRecipies().ElementAt(index);
+            var secondResult = store.GetAllRecipies().ElementAt(index);
+
+            firstResult.Should().NotBeSameAs(secondResult);
+        }
+
         // --------------------------------------------------------------------
 
         [TestMethod]
