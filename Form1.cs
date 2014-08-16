@@ -8,22 +8,18 @@ namespace RecipeManager
 {
     public partial class Form1 : Form
     {
-        public IRecipeStore RecipeStore { get; private set; }
-
-        private List<Recipe> recipes = new List<Recipe>();
+        private IRecipeStore RecipeStore { get; set; }
 
         public Form1()
         {
             InitializeComponent();
 
+            RecipeStore = new FileSystemRecipeStore("./recipes");
             LoadRecipes();
-            RecipeStore = new FileSystemRecipeStore("./");
         }
 
         private void LoadRecipes()
         {
-            recipes = RecipeStore.GetAllRecipies().ToList();
-
             PopulateList();
         }
 
@@ -31,7 +27,7 @@ namespace RecipeManager
         {
             listView1.Items.Clear();
 
-            foreach (Recipe recipe in recipes)
+            foreach (var recipe in RecipeStore.GetAllRecipies().ToList())
             {
                 listView1.Items.Add(new RecipeListViewItem(recipe));
             }
@@ -41,7 +37,6 @@ namespace RecipeManager
         {
             foreach (RecipeListViewItem recipeListViewItem in listView1.SelectedItems)
             {
-                recipes.Remove(recipeListViewItem.Recipe);
                 var name = recipeListViewItem.Recipe.Name;
                 RecipeStore.DeleteRecipeNamed(name);
             }
