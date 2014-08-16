@@ -19,10 +19,15 @@ namespace RecipeManager
 
         private void LoadRecipes()
         {
-            recipes = new DirectoryInfo(@"e:\portkata").GetFiles("*")
-                .Select(fileInfo => new Recipe { Name = fileInfo.Name, Size = fileInfo.Length, Text = File.ReadAllText(fileInfo.FullName) }).ToList();
+            recipes = FS_GetAllRecipies().ToList();
 
             PopulateList();
+        }
+
+        private IEnumerable<Recipe> FS_GetAllRecipies()
+        {
+            return new DirectoryInfo(@"e:\portkata").GetFiles("*")
+                .Select(fileInfo => new Recipe { Name = fileInfo.Name, Size = fileInfo.Length, Text = File.ReadAllText(fileInfo.FullName) });
         }
 
         private void PopulateList()
