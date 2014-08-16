@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -85,6 +86,23 @@ namespace RecipeManager
             store.DeleteRecipeNamed("tEsT rEcIpE nAmE");
 
             store.GetAllRecipies().Should().BeEmpty();
+        }
+
+        // --------------------------------------------------------------------
+
+        [TestMethod]
+        public void AddRecipe_CalledTwiceWithSameNameButDifferentDirections_UpdatesDirections()
+        {
+            var store = new InMemoryRecipeStore();
+            store.AddRecipe("Recipe1", "Inital directions");
+
+            store.AddRecipe("Recipe1", "Much better directions");
+
+            var expected = new[]
+            {
+                CreateRecipe("Recipe1", 22, "Much better directions")
+            };
+            store.GetAllRecipies().ShouldAllBeEquivalentTo(expected);
         }
     }
 }
