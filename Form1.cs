@@ -60,7 +60,7 @@ namespace RecipeManager
         {
             var name = textBoxName.Text;
             var directions = textBoxObjectData.Text;
-            RecipeStore.AddRecipe(name, directions);
+            RecipeStore.SaveRecipe(name, directions);
             LoadRecipes();
         }
 

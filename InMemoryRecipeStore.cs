@@ -15,7 +15,7 @@ namespace RecipeManager
 
         public void DeleteRecipeNamed(string name)
         {
-            var recipeToDelete = recipes.FirstOrDefault(recipe => IsRecipeNamed(recipe, name));
+            var recipeToDelete = FindRecipeByName(name);
             if (recipeToDelete == null)
             {
                 throw new RecipeStoreException("There is no recipe named: " + name);
@@ -23,19 +23,28 @@ namespace RecipeManager
             recipes.Remove(recipeToDelete);
         }
 
-        public void AddRecipe(string name, string directions)
+        public void SaveRecipe(string name, string directions)
         {
-            recipes.Add(new Recipe
+            var existingRecipe = FindRecipeByName(name);
+            if (existingRecipe != null)
             {
-                Name = name,
-                Size = directions.Length,
-                Text = directions
-            });
+                existingRecipe.Text = directions;
+                existingRecipe.Size = directions.Length;
+            }
+            else
+            {
+                recipes.Add(new Recipe
+                {
+                    Name = name,
+                    Size = directions.Length,
+                    Text = directions
+                });
+            }
         }
 
-        private bool IsRecipeNamed(Recipe recipe, string name)
+        private Recipe FindRecipeByName(string name)
         {
-            return string.Equals(recipe.Name, name, StringComparison.CurrentCultureIgnoreCase);
+            return recipes.FirstOrDefault(recipe => string.Equals(recipe.Name, name, StringComparison.CurrentCultureIgnoreCase));
         }
     }
 }
