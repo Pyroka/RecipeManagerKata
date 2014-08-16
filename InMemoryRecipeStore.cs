@@ -14,7 +14,8 @@ namespace RecipeManager
 
         public void DeleteRecipeNamed(string name)
         {
-            throw new System.NotImplementedException();
+            var recipeToDelete = recipes.First(recipe => recipe.Name == name);
+            recipes.Remove(recipeToDelete);
         }
 
         public void AddRecipe(string name, string directions)
