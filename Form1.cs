@@ -66,7 +66,9 @@ namespace RecipeManager
 
         private void SaveClick(object sender, EventArgs e)
         {
-            File.WriteAllText(Path.Combine("e:\\portkata", textBoxName.Text), textBoxObjectData.Text);
+            var name = textBoxName.Text;
+            var directions = textBoxObjectData.Text;
+            File.WriteAllText(Path.Combine("e:\\portkata", name), directions);
             LoadRecipes();
         }
 
