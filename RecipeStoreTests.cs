@@ -6,8 +6,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace RecipeManager
 {
     [TestClass]
-    public class RecipeStoreTests
+    public abstract class RecipeStoreTests
     {
+        protected abstract IRecipeStore CreateStore();
+
+        // --------------------------------------------------------------------
+
         private static Recipe CreateRecipe(string name, int size, string text)
         {
             return new Recipe
@@ -23,7 +27,7 @@ namespace RecipeManager
         [TestMethod]
         public void GetAllRecipies_WithNoRecipies_ReturnsEmpty()
         {
-            var store = new InMemoryRecipeStore();
+            var store = CreateStore();
 
             var result = store.GetAllRecipies();
 
@@ -33,7 +37,7 @@ namespace RecipeManager
         [TestMethod]
         public void GetAllRecipies_AfterRecipesAdded_ReturnsRecipes()
         {
-            var store = new InMemoryRecipeStore();
+            var store = CreateStore();
             store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
             store.SaveRecipe("TestRecipe2", "Get green eggs, add ham");
 
@@ -50,7 +54,7 @@ namespace RecipeManager
         [TestMethod]
         public void GetAllRecipies_AfterRecipesDeleted_ReturnsRemainingRecipes()
         {
-            var store = new InMemoryRecipeStore();
+            var store = CreateStore();
             store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
             store.SaveRecipe("TestRecipe2", "Get green eggs, add ham");
             store.DeleteRecipeNamed("TestRecipe1");
@@ -67,7 +71,7 @@ namespace RecipeManager
         [TestMethod]
         public void GetAllRecipies_WhenInvokedTwice_ReturnsEnumerablesContainingDifferentInstances()
         {
-            var store = new InMemoryRecipeStore();
+            var store = CreateStore();
             store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
 
             const int index = 0;
@@ -82,7 +86,7 @@ namespace RecipeManager
         [TestMethod]
         public void DeleteRecipeNamed_WithNoRecipeOfThatName_ThrowsException()
         {
-            var store = new InMemoryRecipeStore();
+            var store = CreateStore();
 
             Action deleteAction = () => store.DeleteRecipeNamed("IncorrectName");
 
@@ -93,7 +97,7 @@ namespace RecipeManager
         [TestMethod]
         public void DeleteRecipeNamed_WithNameOfExistingRecipeInDifferentCase_DeletesRecipe()
         {
-            var store = new InMemoryRecipeStore();
+            var store = CreateStore();
             store.SaveRecipe("Test Recipe Name", "Some directions");
             
             store.DeleteRecipeNamed("tEsT rEcIpE nAmE");
@@ -106,7 +110,7 @@ namespace RecipeManager
         [TestMethod]
         public void SaveRecipe_CalledTwiceWithSameNameButDifferentDirections_UpdatesDirections()
         {
-            var store = new InMemoryRecipeStore();
+            var store = CreateStore();
             store.SaveRecipe("Recipe1", "Inital directions");
 
             store.SaveRecipe("Recipe1", "Much better directions");
