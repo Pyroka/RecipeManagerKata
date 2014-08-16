@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RecipeManager
@@ -14,10 +15,11 @@ namespace RecipeManager
             return new FileSystemRecipeStore(TestDirectory);
         }
 
+        // --------------------------------------------------------------------
+
         [TestInitialize]
         public void ClearTestDirectory()
         {
-            Directory.CreateDirectory(TestDirectory);
             // Deleting the contents of the folder
             // works better in some cases than deleting
             // and recreating the folder.
@@ -30,6 +32,18 @@ namespace RecipeManager
             {
                 dir.Delete(true);
             }
+        }
+
+        // --------------------------------------------------------------------
+
+        [TestMethod]
+        public void Ctor_WithInvalidDirectoryPath_Throws()
+        {
+            const string invalidDirectoryPath = "<>path";
+            Action createAction = () => new FileSystemRecipeStore(invalidDirectoryPath);
+
+            createAction.ShouldThrow<RecipeStoreException>()
+                .WithMessage("Failed to create root directory: <>path");
         }
     }
 }

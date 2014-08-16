@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,14 @@ namespace RecipeManager
         public FileSystemRecipeStore(string rootDirectory)
         {
             RootDirectory = rootDirectory;
+            try
+            {
+                Directory.CreateDirectory(RootDirectory);
+            }
+            catch (Exception ex)
+            {
+                throw new RecipeStoreException("Failed to create root directory: " + rootDirectory, ex);
+            }
         }
 
         public IEnumerable<Recipe> GetAllRecipies()
