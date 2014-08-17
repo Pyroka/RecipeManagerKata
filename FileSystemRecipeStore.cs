@@ -22,7 +22,7 @@ namespace RecipeManager
             }
         }
 
-        public IEnumerable<Recipe> GetAllRecipies()
+        public IEnumerable<Recipe> GetAllRecipes()
         {
             return new DirectoryInfo(RootDirectory).GetFiles("*")
                 .Select(fileInfo => new Recipe { Name = fileInfo.Name, Size = fileInfo.Length, Text = File.ReadAllText(fileInfo.FullName) });

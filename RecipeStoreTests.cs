@@ -29,7 +29,7 @@ namespace RecipeManager
         {
             var store = CreateStore();
 
-            var result = store.GetAllRecipies();
+            var result = store.GetAllRecipes();
 
             result.Should().BeEmpty();
         }
@@ -41,7 +41,7 @@ namespace RecipeManager
             store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
             store.SaveRecipe("TestRecipe2", "Get green eggs, add ham");
 
-            var result = store.GetAllRecipies();
+            var result = store.GetAllRecipes();
 
             var expected = new[]
             {
@@ -59,7 +59,7 @@ namespace RecipeManager
             store.SaveRecipe("TestRecipe2", "Get green eggs, add ham");
             store.DeleteRecipeNamed("TestRecipe1");
 
-            var result = store.GetAllRecipies();
+            var result = store.GetAllRecipes();
 
             var expected = new[]
             {
@@ -75,8 +75,8 @@ namespace RecipeManager
             store.SaveRecipe("TestRecipe1", "Put the lime in the cocanut");
 
             const int index = 0;
-            var firstResult = store.GetAllRecipies().ElementAt(index);
-            var secondResult = store.GetAllRecipies().ElementAt(index);
+            var firstResult = store.GetAllRecipes().ElementAt(index);
+            var secondResult = store.GetAllRecipes().ElementAt(index);
 
             firstResult.Should().NotBeSameAs(secondResult);
         }
@@ -102,7 +102,7 @@ namespace RecipeManager
             
             store.DeleteRecipeNamed("tEsT rEcIpE nAmE");
 
-            store.GetAllRecipies().Should().BeEmpty();
+            store.GetAllRecipes().Should().BeEmpty();
         }
 
         // --------------------------------------------------------------------
@@ -119,7 +119,7 @@ namespace RecipeManager
             {
                 CreateRecipe("Recipe1", 22, "Much better directions")
             };
-            store.GetAllRecipies().ShouldAllBeEquivalentTo(expected);
+            store.GetAllRecipes().ShouldAllBeEquivalentTo(expected);
         }
     }
 }

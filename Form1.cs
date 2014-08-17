@@ -27,7 +27,7 @@ namespace RecipeManager
         {
             listView1.Items.Clear();
 
-            foreach (var recipe in RecipeStore.GetAllRecipies().ToList())
+            foreach (var recipe in RecipeStore.GetAllRecipes().ToList())
             {
                 listView1.Items.Add(new RecipeListViewItem(recipe));
             }

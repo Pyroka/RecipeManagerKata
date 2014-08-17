@@ -8,7 +8,7 @@ namespace RecipeManager
     {
         private readonly List<Recipe> recipes = new List<Recipe>(); 
 
-        public IEnumerable<Recipe> GetAllRecipies()
+        public IEnumerable<Recipe> GetAllRecipes()
         {
             return recipes.Select(CloneRecipe);
         }
